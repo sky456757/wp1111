@@ -55,7 +55,7 @@ body{
 }
 .extend{
     width: 30%;
-    flex-grow: 0;
+    flex-grow: 0.15;
 }
 .main-block{
     width: 100%;
