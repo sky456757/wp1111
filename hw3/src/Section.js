@@ -11,7 +11,6 @@ class Section extends React.Component {
         list2: [],
         Rm: this.props.Rm
       }
-      this.adj=this.adj.bind(this);
     }
 
     
@@ -32,13 +31,13 @@ class Section extends React.Component {
         this.setState({textDecoration: 'line-through'})
         alert(this.state.textDecoration)
     }
-    adj(n){
+    adj = (n) => {
         this.props.adj(n+1);
     }
-    adj2up(n){
+    adj2up= (n) => {
       this.props.adj2(n+1);
     }
-    adj2down(n){
+    adj2down = (n)=> {
       this.props.adj2(n-1);
     }
     addFirstChild = () => {

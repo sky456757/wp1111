@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import Head from './Head';
 import {Section,N2} from './Section';
 import Foot from './Foot';
@@ -18,13 +17,11 @@ class Root extends React.Component {
       ListsValue: 0,
       Rm : 0
     }
-    this.allocateNum=this.allocateNum.bind(this);
-    this.adjRemain = this.adjRemain.bind(this);
   }
-  allocateNum(amount){
+  allocateNum = (amount) => {
       this.setState({ListsValue:amount})
   }
-  adjRemain(amount){
+  adjRemain = (amount) => {
     this.setState({Rm:amount})
   } 
   render() {
