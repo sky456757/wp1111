@@ -23,7 +23,7 @@ let N = {
 }
 const Board = ({ boardSize, mineNum, backToHome }) => {
     const [board, setBoard] = useState(Array.from({length: boardSize},()=> Array.from({length: boardSize}, () => N)));                     // An 2-dimentional array. It is used to store the board.
-    const [nonMineCount, setNonMineCount] = useState(0);        // An integer variable to store the number of cells whose value are not '💣'.
+    const [nonMineCount, setNonMineCount] = useState(-1);        // An integer variable to store the number of cells whose value are not '💣'.
     const [mineLocations, setMineLocations] = useState(Array.from({length: mineNum},()=> Array.from({length: 2}, () => null)));     // An array to store all the coordinate of '💣'.
     const [gameOver, setGameOver] = useState(false);            // A boolean variable. If true, means you lose the game (Game over).
     const [remainFlagNum, setRemainFlagNum] = useState(0);      // An integer variable to store the number of remain flags.
@@ -60,6 +60,7 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
         freshBoard();
         setGameOver(false);
         setWin(false);
+        setRemainFlagNum(0);
     }
 
     // On Right Click / Flag Cell
@@ -75,12 +76,12 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
             if(!newBoard[x][y].flagged)
             {
                 newBoard[x][y].flagged = true;
-                setRemainFlagNum(remainFlagNum +1);
+                setRemainFlagNum(newFlagNum  +1);
             }
             else
             {
                 newBoard[x][y].flagged = false;
-                setRemainFlagNum(remainFlagNum - 1);
+                setRemainFlagNum(newFlagNum  - 1);
             }
         setBoard(newBoard)
         // Remember to check if board[x][y] is able to add a flag (remainFlagNum, board[x][y].revealed)
@@ -95,9 +96,9 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
         // Basic TODO: Complete the conditions of revealCell (Refer to reveal.js)
         if(newBoard[x][y].value!== '💣')
         {
-            if(nonMineCount === 1)
-                setWin(true)
-            let n = revealed(board,x,y,nonMineCount)
+            //if(nonMineCount === 1)
+                //setWin(true)
+            let n = revealed(board,x,y,nonMineCount,boardSize)
 
             setBoard(n.board)
             setNonMineCount(n.newNonMinesCount)
@@ -111,6 +112,10 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
         // Reminder: Also remember to handle the condition that after you reveal this cell then you win the game.
 
     };
+    useEffect(() => {
+        if(nonMineCount === 0)
+            setWin(true);
+    });
     let r = [];
     let c = [];
     for (let x = 0; x < boardSize; x++)
@@ -132,7 +137,7 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
                 Useful Hint: The board is composed of BOARDSIZE*BOARDSIZE of Cell (2-dimention). So, nested 'map' is needed to implement the board.
                 Reminder: Remember to use the component <Cell> and <Dashboard>. See Cell.js and Dashboard.js for detailed information. */}
                 <div className='boardContainer' >
-                    <Dashboard remainFlagNum={remainFlagNum} gameOver={gameOver}/>
+                    <Dashboard remainFlagNum={remainFlagNum} gameOver={gameOver} win={win}/>
                     {
                         r.map((item) => (
                         <div id = {item} style = {{display: "flex"}}>
@@ -143,6 +148,7 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
                             ))}
                         </div>
                         )) 
+                        //(nonMineCount === 0) ? setWin(true) : null
                     }
 
                 </div>
