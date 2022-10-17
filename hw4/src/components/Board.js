@@ -21,8 +21,8 @@ let N = {
     y: null,
     flagged: null
 }
-let r = [];
-let c = [];
+//var r = [];
+//var c = [];
 const Board = ({ boardSize, mineNum, backToHome }) => {
     const [board, setBoard] = useState(Array.from({length: boardSize},()=> Array.from({length: boardSize}, () => N)));                     // An 2-dimentional array. It is used to store the board.
     const [nonMineCount, setNonMineCount] = useState(-1);        // An integer variable to store the number of cells whose value are not '💣'.
@@ -30,7 +30,7 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
     const [gameOver, setGameOver] = useState(false);            // A boolean variable. If true, means you lose the game (Game over).
     const [remainFlagNum, setRemainFlagNum] = useState(0);      // An integer variable to store the number of remain flags.
     const [win, setWin] = useState(false);                      // A boolean variable. If true, means that you win the game.
-    let a = 1;
+    //let a = 1;
     useEffect(() => {
         // Calling the function
         freshBoard();
@@ -52,18 +52,17 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
 
         }
         setNonMineCount(boardSize*boardSize - mineNum);
-        r = [];
-        c = [];
-        alert(r);
+        /*
+        r.length = 0;
+        c.length = 0;
         for (let x = 0; x < boardSize; x++)
         {
             r.push("row" + x)
         }
-        alert(r);
         for (let x = 0; x < boardSize; x++)
         {
             c.push(x)
-        }
+        }*/
         // Hint: Read the definition of those Hook useState functions and make good use of them.
 
     }
@@ -130,7 +129,17 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
         if(nonMineCount === 0)
             setWin(true);
     });
-
+    
+    let r = [];
+    let c = [];
+    for (let x = 0; x < boardSize; x++)
+    {
+        r.push("row" + x)
+    }
+    for (let x = 0; x < boardSize; x++)
+    {
+        c.push(x)
+    }
     return (
         <div className='boardPage' >
             <div className='boardWrapper' >
