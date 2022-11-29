@@ -30,12 +30,8 @@ const SearchPage = () => {
             setRestaurant(contents)
         }
         catch (error) {
-            if(error == "err")
-            {
-                alert('server not response')
-                return 'server not response'
-            }
-                
+            //alert(error)
+            return 'error'
         }
     }
 

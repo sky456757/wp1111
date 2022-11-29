@@ -33,7 +33,6 @@ const RestaurantPage = () => {
         catch (error) {
             if(error == "err")
             {
-                alert('server not response')
                 return 'server not response'
             }
                 
@@ -51,7 +50,6 @@ const RestaurantPage = () => {
         catch (error) {
             if(error == "err")
             {
-                alert('server not response')
                 return 'server not response'
             }
                 
@@ -70,6 +68,9 @@ const RestaurantPage = () => {
 
     /* TODO Part III-2-b: calculate the average rating of the restaurant */
     let rating = 0;
+
+
+    comments.map((c) =>{rating+=(c.rating/comments.length)})
     
     return (
         <div className='restaurantPageContainer'>

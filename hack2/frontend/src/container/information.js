@@ -33,10 +33,80 @@ const Information = ({ info, rating }) => {
 
     const getBusiness = (time) => {
         
-        return (
-            <div className='businessTime'>
-                {/* TODO Part III-2-c: render business time for each day*/}
+        let day = ["Mon","Tue","Wed","Thr","Fri","Sat","Sun"]
+        let mes = []
+        day.forEach((d) => {
+            if(time.hasOwnProperty(d))
+                mes.push(time[d])
+            else
+                mes.push("Closed")
+        })
+        //alert(time["All"])
+        let ti = time.hasOwnProperty("All") ? 
+        (<div className='businessTime'>
+            <div className='singleDay'>
+                <div className='day'>Mon</div>
+                <div className='time'>{time["All"]}</div>
             </div>
+            <div className='singleDay'>
+                <div className='day'>Tue</div>
+                <div className='time'>{time["All"]}</div>
+            </div>
+            <div className='singleDay'>
+                <div className='day'>Wed</div>
+                <div className='time'>{time["All"]}</div>
+            </div>
+            <div className='singleDay'>
+                <div className='day'>Thr</div>
+                <div className='time'>{time["All"]}</div>
+            </div>
+            <div className='singleDay'>
+                <div className='day'>Fri</div>
+                <div className='time'>{time["All"]}</div>
+            </div>
+            <div className='singleDay'>
+                <div className='day'>Sat</div>
+                <div className='time'>{time["All"]}</div>
+            </div>
+            <div className='singleDay'>
+                <div className='day'>Sun</div>
+                <div className='time'>{time["All"]}</div>
+            </div>
+         </div>
+         ): 
+         (<div className='businessTime'>
+            <div className='singleDay'>
+                <div className='day'>Mon</div>
+                <div className='time'>{mes[0]}</div>
+            </div>
+            <div className='singleDay'>
+                <div className='day'>Tue</div>
+                <div className='time'>{mes[1]}</div>
+            </div>
+            <div className='singleDay'>
+                <div className='day'>Wed</div>
+                <div className='time'>{mes[2]}</div>
+            </div>
+            <div className='singleDay'>
+                <div className='day'>Thr</div>
+                <div className='time'>{mes[3]}</div>
+            </div>
+            <div className='singleDay'>
+                <div className='day'>Fri</div>
+                <div className='time'>{mes[4]}</div>
+            </div>
+            <div className='singleDay'>
+                <div className='day'>Sat</div>
+                <div className='time'>{mes[5]}</div>
+            </div>
+            <div className='singleDay'>
+                <div className='day'>Sun</div>
+                <div className='time'>{mes[6]}</div>
+            </div>
+         </div>
+         )
+        return (
+            ti
         )
     }
 

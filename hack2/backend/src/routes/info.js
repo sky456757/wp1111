@@ -26,14 +26,12 @@ exports.GetSearch = async (req, res) => {
     // When fail,
     //   do `res.status(403).send({ message: 'error', contents: ... })` 
     //console.log(priceFilter)
+
     if (!priceFilter)
         priceFilter = [1,2,3]
-    console.log(priceFilter)
-    if (!mealFilter)
-        mealFilter = ["Breakfast", "Lunch"   , "Dinner"]
-    if (!typeFilter)
-        typeFilter = ["Chinese"  , "American", "Italian", 
-            "Japanese" , "Korean"  , "Thai"]
+    //console.log(priceFilter)
+    let mf = 1
+  
     for(var i = 0; i< priceFilter.length;i++)
     {
         if(priceFilter[i] == "$")
@@ -47,22 +45,75 @@ exports.GetSearch = async (req, res) => {
     let existing = []
     if(sortBy === "price")
     {
-        existing = await Info.find({collection: 'Restaurant'})
-        .where('price').in(priceFilter)
-        .where('tag').in(mealFilter)
-        .where('tag').in(typeFilter)
-        .sort({ price : 0 })
+        
+        try{
+            existing = await Info.find({})
+            .where('price').in(priceFilter)
+            .sort({ price : 0 })
+        }
+        catch(err){
+            res.status(403).send({ message: 'error', contents: [] })
+        }
+        if(mealFilter)
+        {
+            existing = existing.filter((v) => {
+                let it = v.tag.filter((e) => {
+                    return mealFilter.indexOf(e) > -1
+                  })
+                console.log(it)
+                return(it.length !== 0)
+            })
+        }
+        console.log(existing)
+        if(typeFilter)
+        {
+            existing= existing.filter((v) => {
+                let it = v.tag.filter((e) => {
+                    return typeFilter.indexOf(e) > -1
+                  })
+                console.log(it)
+                return(it.length !== 0)
+            })
+        }
+        console.log(existing)
         
     }
     else
     {
-        existing = await Info.find({collection: 'Restaurant'})
-        .where('price').in(priceFilter)
-        .where('tag').in(mealFilter)
-        .where('tag').in(typeFilter)
-        .sort({ distance: 0 })
+        try{
+            existing = await Info.find({})
+            .where('price').in(priceFilter)
+            .sort({ distance: 0 })
+        }
+        catch(err){
+            res.status(403).send({ message: 'error', contents: [] })
+        }
+        if(mealFilter)
+        {
+            existing = existing.filter((v) => {
+                let it = v.tag.filter((e) => {
+                    return mealFilter.indexOf(e) > -1
+                  })
+                console.log(it)
+                return(it.length !== 0)
+            })
+        }
+        console.log(existing)
+        if(typeFilter)
+        {
+            existing= existing.filter((v) => {
+                let it = v.tag.filter((e) => {
+                    return typeFilter.indexOf(e) > -1
+                  })
+                console.log(it)
+                return(it.length !== 0)
+            })
+        }
+        console.log(existing)
     }
-    existing = await Info.find({collection: 'Restaurant'})
+    res.status(200).send({ message: 'success', contents: existing})
+    //existing = await Info.find({collection: 'Restaurant'})
+    /*
     if(existing === [])
     {
         console.log(existing)
@@ -70,9 +121,9 @@ exports.GetSearch = async (req, res) => {
     }
     else
     {
-        console.log(existing)
-        res.status(200).send({ message: 'success', contents: existing })
-    }
+        //console.log(existing)
+        res.status(200).send({ message: 'success', contents: existing})
+    }*/
     // TODO Part II-2-a: revise the route so that the result is filtered with priceFilter, mealFilter and typeFilter
     // TODO Part II-2-b: revise the route so that the result is sorted by sortBy
 }
