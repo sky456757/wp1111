@@ -7,7 +7,12 @@ import Category from './Category';
 
 function Analytics() {
   // TODO 2.2 Use the useQuery hook to get items from backend
-
+  const {
+    loading, error, data: itemsData, subscribeToMore,
+  } = useQuery(GET_ITEMS_QUERY);
+  
+  const { items } = itemsData;
+  //alert(items)
   // TODO 2.2 End
 
 
@@ -16,12 +21,13 @@ function Analytics() {
       { 
         // TODO 2.3 Add Balence and Category (uncomment the following code)
       }
-      {/* <div className="col-span-6">
-        <Balance items={items} />
+       <div className="col-span-6">
+          <Balance items={items} />
       </div>
       <div className="col-span-6">
-        <Category items={items} />
-      </div> */}
+          <Category items={items} />
+        </div> 
+      
       {
         // TODO 2.3 End
       }
